@@ -20,6 +20,8 @@ Server จะดึงข้อมูลที่อยู่ใน Database แ
 
 ## โครงสร้างของ RESTful API
 
+![RESTful API Structure](./images/restful-api-structure.png)
+
 **1. Endpoints** - เป็น URL ที่เป็นช่องทางในการเรียกใช้ API
 
 ตัวอย่าง Endpoint
