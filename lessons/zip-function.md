@@ -28,3 +28,21 @@ for employee, score in zip(employees, scores):
 employee_details = dict(zip(employees, scores))
 print(employee_details)
 ```
+
+<br><hr><br>
+
+## Exercises 🏅
+
+A) ให้ zip ข้อมูล students และ points ให้เป็น list และ dictionary
+
+```python
+students = ["JJ", "John", "Grace", "Abe", "G"]
+points = [50, 40, 60, 40, 100]
+```
+
+B) ให้ zip ข้อมูล columns และ row ให้เป็น dictionary
+
+```python
+columns = ["id", "title", "content"]
+row = ["1", "how to be a good software engineer", "this is the longest content ever"]
+```
