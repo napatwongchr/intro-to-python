@@ -54,6 +54,39 @@ result_employee_names = [f"ADMIN-{employee_name}" for employee_name in employee_
 print(result_employee_names)
 ```
 
+ลองมาดูตัวอย่างที่น่าสนในอีกซักตัวอย่าง ถ้าเรามี employee list แบบนี้
+
+```python
+employees = [
+    { "name": 'Bradley', "age": 20, "points": 3  },
+    { "name": 'Chloe', "age": 40, "points": 6 },
+    { "name": 'Robert', "age": 34, "points": 8 },
+    { "name": 'Wes', "age": 25, "points": 10},
+    { "name": 'Zach', "age": 67, "points": 7}
+]
+```
+
+โจทย์คือ ถ้าเราอยากจะได้ list ของ employee ที่มีข้อมูล age > 30 เราสามารถทำแบบนี้ได้
+
+```python
+new_employees = [employee for employee in employees if employee["age"] > 30]
+print(new_employees)
+```
+
+โจทย์ต่อมา ถ้าเราอยากได้ list ของ employee ที่มีข้อมูล status = "Passed" ในแต่ละ employee เราสามารถทำแบบนี้ได้
+
+```python
+new_employees = [dict(employee, status="Passed") for employee in employees if employee["age"] > 30]
+print(new_employees)
+```
+
+ต่อไปถ้าเราอยากได้ผลรวมของอายุ employees
+
+```python
+new_employees = sum([employee["age"] for employee in employees])
+print(new_employees)
+```
+
 <br><hr><br>
 
 ## Conditionals List Comprehension
@@ -80,3 +113,27 @@ print(result_employee_names)
 </div>
 
 <br><hr><br>
+
+## Exercises 🏅
+
+กำหนดให้
+
+```python
+users = [
+      { "first_name": 'Bradley', "last_name": 'Bouley', "role": 'Full Stack Resident', "salary", 200000 },
+      { "first_name": 'Chloe', "last_name": 'Alnaji', "role": 'Full Stack Resident', "salary", 45000 },
+      { "first_name": 'Jonathan', "last_name": 'Baughn', "role": 'Enterprise Instructor', "salary", 500000 },
+      { "first_name": 'Michael', "last_name": 'Herman', "role": 'Lead Instructor', "salary", 100000 },
+      { "first_name": 'Robert', "last_name": 'Hajek', "role": 'Full Stack Resident', "salary", 150000 },
+      { "first_name": 'Wes', "last_name": 'Reid', "role": 'Instructor', "salary", 30400},
+      { "first_name": 'Zach', "last_name": 'Klabunde', "role": 'Instructor', "salary", 350000}
+    ]
+```
+
+A) ให้สร้าง List ใหม่ที่ user มี role เป็น "Instructor" เท่านั้น
+
+B) ให้สร้าง List ใหม่ที่ user มีข้อมูล grade (สมมุติให้ grade เป็น "A")
+
+C) ให้สร้าง List ใหม่ที่ first_name ของแต่ละ user ติด Tag "A001" เข้าไปหน้าชื่อ
+
+D) ผลรวมของ Salary ในแต่ละ user ทั้งหมดเท่าไหร่
