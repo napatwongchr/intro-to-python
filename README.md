@@ -18,7 +18,7 @@
 ## Intermediate Programming In Python
 
 [List Comprehension](https://github.com/napatwongchr/intro-to-python/blob/main/lessons/list-comprehension.md)<br>
-[Zip Function](https://github.com/napatwongchr/intro-to-python/blob/main/lessons/zip-function.md)
+[Zip Function](https://github.com/napatwongchr/intro-to-python/blob/main/lessons/zip-function.md)<br>
 [Datetime In Python](https://github.com/napatwongchr/intro-to-python/blob/main/lessons/datetime.md)<br>
 
 <br><hr><br>
