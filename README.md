@@ -4,14 +4,14 @@
 
 ## Basic Programming In Python
 
-[Welcome To Python World](https://github.com/napatwongchr/intro-to-python/blob/main/README.md)<br>
-[Basic Data Types](https://github.com/napatwongchr/intro-to-python/blob/main/README.md)<br>
-[Functions](https://github.com/napatwongchr/intro-to-python/blob/main/README.md)<br>
-[Advance Data Types](https://github.com/napatwongchr/intro-to-python/blob/main/README.md)<br>
-[Boolean](https://github.com/napatwongchr/intro-to-python/blob/main/README.md)<br>
-[Loops And Control Statements](https://github.com/napatwongchr/intro-to-python/blob/main/README.md)<br>
-[Python Program Structure](https://github.com/napatwongchr/intro-to-python/blob/main/README.md)<br>
-[Modules](https://github.com/napatwongchr/intro-to-python/blob/main/README.md)<br>
+Welcome To Python World<br>
+Basic Data Types<br>
+Functions<br>
+Advance Data Types<br>
+Boolean<br>
+Loops And Control Statements<br>
+Python Program Structure<br>
+Modules<br>
 
 <br><hr><br>
 
@@ -20,6 +20,7 @@
 [List Comprehension](https://github.com/napatwongchr/intro-to-python/blob/main/lessons/list-comprehension.md)<br>
 [Zip Function](https://github.com/napatwongchr/intro-to-python/blob/main/lessons/zip-function.md)<br>
 [Datetime In Python](https://github.com/napatwongchr/intro-to-python/blob/main/lessons/datetime.md)<br>
+Decorator
 
 <br><hr><br>
 
