@@ -25,3 +25,15 @@ class Customer(User):
   def __init__(self, name, score):
     super().__init__(name, score)
 ```
+
+<br><hr><br>
+
+## isinstance
+
+เราสามารถเช็ค instance ที่เราสร้างมาได้ว่าเป็น instance ของ class นั้นจริง ๆ หรือเปล่า ยกตัวอย่างเช่น
+
+```python
+print(isinstance(customer_1, User)) # True
+```
+
+<br><hr><br>

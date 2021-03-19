@@ -36,3 +36,5 @@ print(f"This is user_1 detail: {str(user_1)}")
 
 customer_1 = Customer("Abe", 10)
 print(f"This is customer_1 detail: {str(customer_1)}")
+
+print(isinstance(customer_1, User))
