@@ -128,13 +128,13 @@ print(result_employee_names)
 
 ```python
 users = [
-      { "first_name": 'Bradley', "last_name": 'Bouley', "role": 'Full Stack Resident', "salary", 200000 },
-      { "first_name": 'Chloe', "last_name": 'Alnaji', "role": 'Full Stack Resident', "salary", 45000 },
-      { "first_name": 'Jonathan', "last_name": 'Baughn', "role": 'Enterprise Instructor', "salary", 500000 },
-      { "first_name": 'Michael', "last_name": 'Herman', "role": 'Lead Instructor', "salary", 100000 },
-      { "first_name": 'Robert', "last_name": 'Hajek', "role": 'Full Stack Resident', "salary", 150000 },
-      { "first_name": 'Wes', "last_name": 'Reid', "role": 'Instructor', "salary", 30400},
-      { "first_name": 'Zach', "last_name": 'Klabunde', "role": 'Instructor', "salary", 350000}
+      { "first_name": 'Bradley', "last_name": 'Bouley', "role": 'Full Stack Resident', "salary": 200000 },
+      { "first_name": 'Chloe', "last_name": 'Alnaji', "role": 'Full Stack Resident', "salary": 45000 },
+      { "first_name": 'Jonathan', "last_name": 'Baughn', "role": 'Enterprise Instructor', "salary": 500000 },
+      { "first_name": 'Michael', "last_name": 'Herman', "role": 'Lead Instructor', "salary": 100000 },
+      { "first_name": 'Robert', "last_name": 'Hajek', "role": 'Full Stack Resident', "salary": 150000 },
+      { "first_name": 'Wes', "last_name": 'Reid', "role": 'Instructor', "salary": 30400},
+      { "first_name": 'Zach', "last_name": 'Klabunde', "role": 'Instructor', "salary": 350000}
     ]
 ```
 
