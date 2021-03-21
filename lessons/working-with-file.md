@@ -1,10 +1,10 @@
 # Working With File
 
-ถ้าเราจะอ่านไฟล์ด้วย `open` แต่เราจะใช้กับ `with` ซึ่งเป็น **context manager**
+ปกติเราจะอ่านไฟล์ด้วย built-in function ที่ชื่อว่า `open` แต่เราจะใช้กับ `with` ซึ่งเป็น **context manager**
 
 Context manager จะเป็นตัวที่คอยจัดการการเปิดปิดไฟล์ให้เราอย่างมีประสิทธิภาพ ปกติเวลาเรา จะอ่านไฟลเ์ราจะตอ้งopen()จากนั้นเมื่ออ่านเสร็จให้เราclose()ดว้ยเสมอๆแต่ถ้าใช้context manager มันจะ close() ให้เราเอง
 
-ให้ download ตัวอย่างไฟล์ได้ [ที่นี่](../../intro-to-python/working-with-file/hello.txt)
+ให้ download ตัวอย่างไฟล์ text [ที่นี่](../working-with-file/hello.txt)
 
 เราสามารถที่จะอ่านข้อมูลจากไฟล์ได้แบบนี้
 
@@ -22,6 +22,8 @@ read_text_file()
 ```
 
 เรามาลองดูการอ่านไฟล์ json กันบ้าง
+
+ให้ download ตัวอย่างไฟล์ได้ [ที่นี่](../working-with-file/users.json)
 
 ```python
 from pathlib import Path
