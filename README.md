@@ -13,6 +13,7 @@ Loops And Control Statements<br>
 Python Program Structure<br>
 Modules<br>
 [Working With File](https://github.com/napatwongchr/intro-to-python/blob/main/lessons/working-with-file.md)<br>
+[Try And Exception](https://github.com/napatwongchr/intro-to-python/blob/main/lessons/try-exception.md)<br>
 
 <br><hr><br>
 
