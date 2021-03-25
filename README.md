@@ -41,3 +41,8 @@ Decorator
 [Making Requests With Python](https://github.com/napatwongchr/intro-to-python/blob/main/lessons/making-requests-with-python.md)<br>
 
 <br><hr><br>
+
+## DJANGO
+
+[Getting Start With Django](https://github.com/napatwongchr/intro-to-python/blob/main/lessons/getting-start-with-django.md)<br>
+[Building First Simple API](https://github.com/napatwongchr/intro-to-python/blob/main/lessons/building-first-simple-api.md)<br>
