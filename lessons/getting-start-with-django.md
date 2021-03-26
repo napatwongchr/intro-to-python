@@ -4,6 +4,8 @@ Django เป็น Web framework ที่ใช้ช่วยพัฒนา 
 
 Slogan “The web framework for perfectionists with deadlines”
 
+Code ทั้งหมดที่จะลองทำให้ดูอยู่ https://github.com/napatwongchr/python-blog-app
+
 ## Why Django ?
 
 1. Ridiculously fast - Learning curve ต่ำ ช่วยให้เราพัฒนา Application ได้ไวมากตาม Slogan ของเค้าเอง

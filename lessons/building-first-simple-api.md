@@ -59,7 +59,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.post_list, name=‘post _list’),
+    path('', views.post_list, name='post _list'),
 ]
 
 ```
@@ -72,13 +72,13 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    path(‘posts/‘, include(‘posts.urls')),
+    path('posts/', include('posts.urls')),
     path('admin/', admin.site.urls),
 ]
 
 ```
 
-จากนั้นให้เราลองเปิด postman แล้ว send request ด้วย HTTP Method GET ไปที่ http://127.0.0.1:8000/posts/ เราได้ response กลับมาว่า “Hello, this is posts app”
+จากนั้นให้เราลองเปิด postman แล้ว send request ด้วย HTTP Method GET ไปที่ `http://127.0.0.1:8000/posts/` เราได้ response กลับมาว่า “Hello, this is posts app”
 
 เรามาทำให้ api ของเรา return response ให้สมจริงขึ้นหน่อย เราจะ return ข้อมูลออกไปเป็น dict หน้าตาแบบนี้
 
@@ -102,7 +102,7 @@ from django.http import HttpResponse, JsonResponse
 posts = {
     "data": [
         {
-            "id": “1”,
+            "id": "1",
             "title": "Post #1",
             "content": "This is post #1 content"
         }
@@ -122,5 +122,3 @@ def post_list(request):
 เราจะสร้าง variable response จากนั้น เรียกใช้ JsonResponse function แล้วส่ง posts เข้าไปเป็น parameter data แล้วเราจะกำหนด response.status_code เป็น 200 แล้ว return response ออกไป
 
 จากนั้นให้เราลองไป Send request ที่ Postman อีกทีเราจะได้หน้าตา response จาก API แบบที่เราต้องการ
-
-_Checkout branch เพื่อดู code ส่วนข้างบนด้วย `git checkout create-first-simple-api`_

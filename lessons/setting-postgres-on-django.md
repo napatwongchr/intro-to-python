@@ -91,5 +91,3 @@ Migrations for 'posts':
 Running migrations:
   Applying posts.0001_initial... OK
 ```
-
-_Checkout branch เพื่อดู code ส่วนข้างบนด้วย `git checkout create-post-model`_

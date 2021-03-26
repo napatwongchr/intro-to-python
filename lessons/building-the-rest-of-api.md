@@ -53,8 +53,6 @@ def single_post_detail(request, post_id):
 
 ```
 
-_Checkout branch เพื่อดู code ส่วนข้างบนด้วย `git checkout create-get-post-by-id-api`_
-
 <br><hr><br>
 
 ## Create Post
@@ -123,18 +121,12 @@ if (request.method == "POST"):
     return response
 ```
 
-_Checkout branch เพื่อดู code ส่วนข้างบนด้วย `git checkout create-post-api`_
-
 <br><hr><br>
 
 ## Exercise 🏅
 
 1. ลองเขียน API Update Post
 
-_Checkout branch เพื่อดู code เฉลย `git checkout create-update-post-api`_
-
 2. ลองเขียน API Delete Post
-
-_Checkout branch เพื่อดู code เฉลย `git checkout create-delete-post-api`_
 
 <br><hr><br>
