@@ -47,3 +47,6 @@ Decorator
 
 [Getting Start With Django](https://github.com/napatwongchr/intro-to-python/blob/main/lessons/getting-start-with-django.md)<br>
 [Building First Simple API](https://github.com/napatwongchr/intro-to-python/blob/main/lessons/building-first-simple-api.md)<br>
+[Building Rest APIs](https://github.com/napatwongchr/intro-to-python/blob/main/lessons/building-the-rest-of-api.md)<br>
+[Making Raw Queries](https://github.com/napatwongchr/intro-to-python/blob/main/lessons/making-raw-query-on-django.md)<br>
+[Object Relational Mapper](https://github.com/napatwongchr/intro-to-python/blob/main/lessons/orm.md)<br>
