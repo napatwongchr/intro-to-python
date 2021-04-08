@@ -77,19 +77,22 @@ def comment_list(request, post_id):
 จากนั้นลองมาดู API get all posts กันบ้าง ให้เราใช้ PostSerializer ในการ serialize ข้อมูลออกไปใน response
 
 <details>
-  <summary>เฉลย</summary>
-  
-  ```python
-  @api_view(['GET'])
-  @csrf_exempt
-  def post_list(request):
+<summary>แอบดูเฉลย</summary>
+<p>
 
-    if (request.method == "GET"):
-      posts = Post.objects.all()
-      serializer = PostSerializer(posts, many=True)
-      return Response({ "data": serializer.data })
+```python
+ @api_view(['GET'])
+ @csrf_exempt
+ def post_list(request):
 
-````
+   if (request.method == "GET"):
+     posts = Post.objects.all()
+     serializer = PostSerializer(posts, many=True)
+     return Response({ "data": serializer.data })
+
+```
+
+</p>
 </details>
 
 <br><hr><br>
@@ -107,7 +110,7 @@ if (request.method == "POST"):
     return Response({ "message": "created post successfully." }, status=status.HTTP_201_CREATED)
 
   return Response({ "message": "created post failed", "errors": serializer.errors }, status=status.HTTP_400_BAD_REQUEST)
-````
+```
 
 - เราจะใช้ PostSerializer ในการ serialize ตัวข้อมูลที่ส่งเข้ามา เราจะส่ง `request.data` เข้าไปใน PostSerializer
 - จากนั้นเราจะทำการ validate ข้อมูลด้วย `serializer.is_valid()`
@@ -123,15 +126,24 @@ if (request.method == "POST"):
 
 เราจะมา refactor code ของ APIs ตัวอื่น ๆ ที่เหลือกัน
 
+APIs ที่เหลือ
+
+- get post by id
+- update post
+- delete post
+
+<br><hr><br>
+
 ## Exercise
 
 ให้ลอง Refactor API get post by id โดยใช้ PostSerializer
 
 <details>
-  <summary>เฉลย</summary>
-  
-  ```python
-    @api_view(['GET'])
+<summary>แอบดูเฉลย</summary>
+<p>
+
+```python
+@api_view(['GET'])
     @csrf_exempt
     def single_post_detail(request, post_id):
       if request.method == "GET":
@@ -141,5 +153,75 @@ if (request.method == "POST"):
           return Response({ "data": serializer.data })
         except:
           return Response({ "data": {} }, status=status.HTTP_404_NOT_FOUND)
-    ```
+```
+
+</p>
 </details>
+
+<br><hr><br>
+
+## Refactor Update Post API
+
+```python
+ if request.method == "PUT":
+    try:
+      queried_post = Post.objects.filter(id=post_id)[0]
+      serializer = PostSerializer(post, data=request.data)
+
+      if serializer.is_valid():
+        serializer.save()
+        return Response({ "message": "updated post successfully." })
+      return Response({ "message": "updated post failed", "errors": serializer.errors }, status=status.HTTP_400_BAD_REQUEST)
+
+    except IndexError:
+      return Response({ "message": "post not found" }, status=status.HTTP_404_NOT_FOUND)
+```
+
+อย่าลืมใส่ http method `PUT` เข้าไปใน api_view decorator ด้วย
+
+<br><hr><br>
+
+## Refactor Delete Post API
+
+```python
+if request.method == "DELETE":
+    try:
+      post = Post.objects.filter(id=post_id)[0]
+      post.delete()
+      return Response({ "message": "deleted post successfully." })
+    except IndexError:
+      return Response({ "message": "post not found" }, status=status.HTTP_404_NOT_FOUND)
+```
+
+<br><hr><br>
+
+## Last Refactor
+
+เราจะสังเกตได้ว่า post = Post.objects.filter(id=post_id) มันซ้ำกันค่อนข้างมาก เราจะ refactor ตรงนี้ให้มันไม่ซ้ำซ้อนกันซักหน่อย
+
+```python
+@api_view(['GET', 'PUT', 'DELETE'])
+@csrf_exempt
+def single_post_detail(request, post_id):
+  post = Post.objects.filter(id=post_id)
+
+  if not len(post):
+    return Response({ "message": f"post {post_id} not found" }, status=status.HTTP_404_NOT_FOUND)
+
+  if request.method == "GET":
+    serializer = PostSerializer(post[0])
+    return Response({ "data": serializer.data })
+
+
+  if request.method == "PUT":
+    serializer = PostSerializer(post, data=request.data)
+    if serializer.is_valid():
+      serializer.save()
+      return Response({ "message": "updated post successfully." })
+    return Response({ "message": "updated post failed", "errors": serializer.errors }, status=status.HTTP_400_BAD_REQUEST)
+
+  if request.method == "DELETE":
+    post.delete()
+    return Response({ "message": "deleted post successfully." })
+
+```

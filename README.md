@@ -51,6 +51,6 @@ Decorator
 [Setting Postgres on Django](./lessons/setting-postgres-on-django.md)<br>
 [Making Raw Queries](https://github.com/napatwongchr/intro-to-python/blob/main/lessons/making-raw-query-on-django.md)<br>
 [Object Relational Mapper](https://github.com/napatwongchr/intro-to-python/blob/main/lessons/orm.md)<br>
-[ORM With Relations](./lessons/orm-with-relations.md)
-[Django Rest Framework](./lessons/django-rest-framework.md)
-[Basic Authentication](./lessons/basic-authentication.md)
+[ORM With Relations](./lessons/orm-with-relations.md)<br>
+[Django Rest Framework](./lessons/django-rest-framework.md)<br>
+[Basic Authentication](./lessons/basic-authentication.md)<br>
