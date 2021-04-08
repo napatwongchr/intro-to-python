@@ -1,10 +1,22 @@
 # Learn django-rest-framework
 
-เรามี Model และเราสามารถที่จะ Interact กับ Model และข้อมูลใน Application ของเราได้แล้ว สิ่งที่เราจะทำต่อไปก็คือ การสร้าง API เพื่อที่จะให้หน้าเว็บ (Client) มาเรียกใช้งานผ่าน REST เราจะใช้เครื่องมือเข้ามาช่วยคือ django-rest-framework
+django-rest-framework เป็นเครื่องมือที่จะช่วยให้เราสร้าง API ได้ง่ายมากยิ่งขึ้นมาก ๆ [สนใจอ่านข้อมูลเพิ่มเติมเกี่ยวกับตัว framework กดที่นี่เลย](https://www.django-rest-framework.org/)
 
-1. Install django-rest-framework ก่อนด้วยคำสั่ง `pip install djangorestframework`
+เราจะใช้ django-rest-framework ช่วยเราให้ทำงานง่ายขึ้นใน 2 ส่วนใหญ่ ๆ ของ API ที่เราสร้าง
 
-2. ใส่ `rest_framework` ลงไปใน INSTALLED_APPS
+**1. Serialization ข้อมูล**
+
+เราจะสังเกตเห็นว่า พอเรา query ข้อมูลขึ้นมาจาก Database แล้วเนี่ย เราจะต้องเหมือนกับว่าปั้นข้อมูลให้อยู่ในรูปแบบของ dictionary แล้วทำการเปลี่ยน dictionary ให้กลายเป็น json string เพื่อที่จะส่งข้อมูลกลับไปให้ client ซึ่งมันจะเป็นการเหนื่อยเอามาก ๆ ถ้าเราเขียนตรงนี้ซ้ำไปมาเรื่อย ๆ
+
+**2. API Authentication**
+
+เวลาเราสร้าง API ขึ้นมาเราไม่ได้อยากให้ทุกคนสามารถ Access APIs เราได้อย่างแน่นอน เราจะใช้ django-rest-framework ในการสร้างระบบ Authentication ขึ้นมา
+
+## Setup django-rest-framework
+
+Install django-rest-framework ก่อนด้วยคำสั่ง `pip install djangorestframework`
+
+ใส่ `rest_framework` ลงไปใน INSTALLED_APPS
 
 ```python
 INSTALLED_APPS = [
@@ -14,331 +26,120 @@ INSTALLED_APPS = [
 ]
 ```
 
-3. ต่อไปเราจะทำการ สร้าง Serializer class กัน ก่อนอื่นทำความเข้าใจเรื่องของ Serialization กันก่อน
+<br><hr><br>
 
-Serialization เป็นกระบวนการในการเปลี่ยน data structure หรือ object state ให้ไปอยู่ใน format ที่สามารถเก็บลง Database, Memory หรือ File จุดประสงค์หลักคือ เป็นการบันทึกข้อมูล หรือ state นั้น ๆ เอาไว้ เพื่อใช้ในการส่งผ่านข้อมูลไปยังอีกระบบ หรือบันทึกลง database
+## Serialization
 
-สร้างไฟล์ `polls/serializers.py`
+ต่อไปเราจะใช้ django-rest-framework ในการ serialization ข้อมูลที่เรา query ออกมาจาก database
+
+_Serialization เป็นกระบวนการในการเปลี่ยน data structure หรือ object state ให้ไปอยู่ใน format ที่สามารถเก็บลง Database, Memory หรือ File จุดประสงค์หลักคือ เป็นการบันทึกข้อมูล หรือ state นั้น ๆ เอาไว้ เพื่อใช้ในการส่งผ่านข้อมูลไปยังอีกระบบ หรือบันทึกลง database_
+
+สร้างไฟล์ `blogs/serializers.py` แล้วสร้าง PostSerializer, CommentSerializer class ขึ้นมา
 
 ```python
 from rest_framework import serializers
-from .model import Question, Choice
+from .model import Post, Comment
 
-class QuestionSerializer(serializers.ModelSerializer):
+class PostSerializer(serializers.ModelSerializer):
   class Meta:
-    model = Question
-    fields = ['id', 'question_text', 'published_date']
+    model = Post
+    fields = ['id', 'title', 'content']
+
+class CommentSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Comment
+    fields = ['id', 'comment', 'created_on', 'updated_on']
 ```
 
-```python
-class ChoiceSerializer(serializers.ModelSerializer):
-  class Meta:
-    model = Choice
-    fields = ['id', 'question', 'choice_text']
-```
-
-4. เมื่อเราสร้าง Serializer เสร็จแล้ว เพื่อให้เห็นภาพเรามาลองเล่น Serializer กันซักหน่อยว่ามันนำไปใช้งานเบื้องต้นยังไง เราจะทำการสร้าง API ในการจัดการ Polls
-
-เราจะทำการสร้าง API สำหรับ Questions ในการ list questions ทั้งหมด ที่ `polls/views.py`
+เมื่อเราสร้าง Serializer เสร็จแล้ว เพื่อให้เห็นภาพเรามาลองเล่น Serializer กันซักหน่อยว่ามันนำไปใช้งานเบื้องต้นยังไง เราจะทำการ Refactor API สำหรับ Questions ในการ list comments ทั้งหมด ที่ `blogs/views.py`
 
 ```python
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from polls.models import Question
-from polls.serializers import QuestionSerializer
+from .serializers import CommentSerializer
+from .models import Post, Comment
 
 @api_view(['GET'])
-def question_list(request):
-  if request.method == 'GET':
-    questions = Question.objects.all()
-    serializer = QuestionSerializer(questions, many=True)
+def comment_list(request, post_id):
+  if request.method == "GET":
+    comments = Comment.objects.filter(post_id=post_id)
+    serializer = CommentSerializer(comments, many=True)
     return Response({ "data": serializer.data })
 ```
 
-5. เราจะทำการลองเล่น API Get Questions ทั้งหมด ด้วย Postman เราจะเห็นผลลัพธ์คล้ายๆตัวอย่างข้างล่างนี้
+ให้เราทำการลองเล่น API Get Comments ที่ endpoint `/posts/10/comments` ด้วย Postman ดู
 
-```json
-{
-  "data": [
-    {
-      "id": 10,
-      "question_text": "question_text test",
-      "pub_date": "2020-12-19T02:31:38Z"
-    }
-  ]
-}
-```
+<br><hr><br>
 
-6. ต่อไปเราจะทำการสร้าง API สำหรับการสร้าง Question เราจะเพิ่มโค้ดใน function question list ของเราต่อ เราจะเช็ค `request.method` เพิ่มว่า ถ้า request ที่เข้ามาผ่าน url `polls/questions/` และเป็น POST ให้ทำการสร้าง Question นั้น
+## Exercise
 
-```python
-@api_view(['GET', 'POST'])
-def question_list(request):
-  if request.method == 'GET':
-    questions = Question.objects.all()
-    serializer = QuestionSerializer(questions, many=True)
-    return Response({ "data": serializer.data })
+จากนั้นลองมาดู API get all posts กันบ้าง ให้เราใช้ PostSerializer ในการ serialize ข้อมูลออกไปใน response
 
-  if request.method == 'POST':
-    serializer = QuestionSerializer(data=request.data)
-    if serializer.is_valid():
-      serializer.save()
-      return Response({ "message": "create successfully", "data": serializer.data }, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-```
+<details>
+  <summary>เฉลย</summary>
+  
+  ```python
+  @api_view(['GET'])
+  @csrf_exempt
+  def post_list(request):
 
-6. เราจะทำการลองใช้ Postman ในการลองเล่นกับ API Create Question ที่เราสร้าง
+    if (request.method == "GET"):
+      posts = Post.objects.all()
+      serializer = PostSerializer(posts, many=True)
+      return Response({ "data": serializer.data })
 
-ปรับ HTTP Method เป็น POST และใส่ Request body ดังนี้
+````
+</details>
 
-```json
-{
-  "question_text": "question_text test",
-  "pub_date": "2020-12-19T02:31:38Z"
-}
-```
+<br><hr><br>
 
-เราจะได้ Response กลับมาดังนี้
+## Create Post Serilizer
 
-```json
-{
-  "message": "create successfully",
-  "data": {
-    "id": 13,
-    "question_text": "question_text test",
-    "pub_date": "2020-12-19T02:31:38Z"
-  }
-}
-```
-
-7. เนื่องจากว่า Question ของเราสามารถมี Choices ได้หลายตัว เราจะทำการปรับ Code นิดหน่อยให้เราสามารถสร้าง Choices พร้อม ๆ กับตัว Question ไปด้วยเลยใน API เดียวกัน เราจะทำการการปรับ serializers ที่ `polls/serializers.py` ด้วยการเพิ่ม function create เข้าไปใน `QuestionSerializer` Class ดังนี้
+ต่อไปเราจะมาดู API ที่ใช้สร้าง Post กันว่าเราจะใช้ประโยชน์จาก serializer ยังไงได้บ้าง
 
 ```python
-class QuestionSerializer(serializers.ModelSerializer):
-  choices = ChoiceSerializer(many=True)
+if (request.method == "POST"):
+  serializer = PostSerializer(data=request.data)
 
-  class Meta:
-    model = Question
-    fields = ['id', 'question_text', 'pub_date', 'choices']
+  if serializer.is_valid():
+    serializer.save()
+    return Response({ "message": "created post successfully." }, status=status.HTTP_201_CREATED)
 
-  def create(self, validated_data):
-    choices_data = validated_data.pop('choices')
-    question = Question.objects.create(**validated_data)
-    for choice_data in choices_data:
-        Choice.objects.create(question=question, **choice_data)
-    return question
-```
+  return Response({ "message": "created post failed", "errors": serializer.errors }, status=status.HTTP_400_BAD_REQUEST)
+````
 
-8. เราจะทำการสร้าง Question และ Choices ผ่าน Postman
+- เราจะใช้ PostSerializer ในการ serialize ตัวข้อมูลที่ส่งเข้ามา เราจะส่ง `request.data` เข้าไปใน PostSerializer
+- จากนั้นเราจะทำการ validate ข้อมูลด้วย `serializer.is_valid()`
+- ถ้าข้อมูลของเราถูกต้องเราจะ save ข้อมูลลง db `serializer.save()`
+- จากนั้นเราจะ return response success ออกไป พร้อม `status.HTTP_201_CREATED`
+- ถ้าข้อมูลเราผิดเราจะ return response failed ออกไป พร้อม `status.HTTP_400_BAD_REQUEST`
 
-ทำการใส่ Request body ดังนี้
+อย่าลืมใส่ `@api_view(['GET', 'POST'])` ด้วยนะ
 
-```json
-{
-  "question_text": "question_text test",
-  "pub_date": "2020-12-19T02:31:38Z",
-  "choices": [
-    {
-      "choice_text": "choice a",
-      "votes": 0
-    },
-    {
-      "choice_text": "choice b",
-      "votes": 5
-    }
-  ]
-}
-```
+<br><hr><br>
 
-ผลลัพทธ์ที่ออกมาจะได้ประมาณนี้
+## Refactor Other APIs
 
-```json
-{
-  "message": "create successfully",
-  "data": {
-    "id": 14,
-    "question_text": "question_text test",
-    "pub_date": "2020-12-19T02:31:38Z",
-    "choices": [
-      {
-        "id": 9,
-        "choice_text": "choice a",
-        "votes": 0
-      },
-      {
-        "id": 10,
-        "choice_text": "choice b",
-        "votes": 5
-      }
-    ]
-  }
-}
-```
+เราจะมา refactor code ของ APIs ตัวอื่น ๆ ที่เหลือกัน
 
-9. เราจะสร้าง API สำหรับการจัดการข้อมูลของ Question รายตัว ได้แก่ การ Read, Update, Delete ต่อมาให้เราไป Update URL ที่ `polls/urls.py` ตามนี้ ด้วยการเพิ่ม path ใหม่เข้าไป ซึ่ง path นี้จะทำการรับ question id ที่เป็น Integer แล้วเราจะทำการสร้าง views ใหม่ที่ชื่อว่า `question_detail`
+## Exercise
 
-```python
-from django.urls import path
-from polls import views
+ให้ลอง Refactor API get post by id โดยใช้ PostSerializer
 
-urlpatterns = [
-  path('questions/', views.question_list),
-  path('questions/<int:question_id>, views.question_detail)
-]
-```
-
-10. ให้เรามาที่ `polls/views.py` เราจะสร้าง Function ใหม่ ชืื่อว่า `question_detail` แล้วเราจะทำการดึงข้อมูลของ Question นั้น ๆ ด้วย question_id ที่ส่งมาจาก url ที่เราเขียน path ไว้รับ แล้วเราจะเขียนเพิ่มว่า ถ้า request ที่เข้ามาเป็น GET เราจะให้มัน return ข้อมูลของ Question นั้น ออกไปได้เลย ตามโค้ดด้านล่าง
-
-```python
-def question_detail(request, question_id):
-  try:
-    question = Question.objects.get(pk=question_id)
-  except Question.DoesNotExist:
-    return Response({ "message": "requested question not found" }, status=status.HTTP_404_NOT_FOUND)
-
-  if request.method == 'GET':
-    serializer = QuestionSerializer(question)
-    return Response({ "data": serializer.data })
-```
-
-11. เราจะลองดึงข้อมูลของ Question ที่เราสร้างไปเมื่อสักครู่นี้ผ่าน Postman
-
-ทำการเปลี่ยน Method เป็น GET และ Url เป็น `localhost:8000/polls/question/14`
-
-_ตัวเลข 14 เป็น Id ของ Question ที่อยากจะดึงอาจจะไม่เหมือนกันทุกเครื่อง ให้อิงตามเลขที่สร้างจากเครื่องตัวเอง_
-
-เราจะได้ Response มาหน้าตาประมาณนี้
-
-```
-{
-    "data": {
-        "id": 14,
-        "question_text": "question_text test",
-        "pub_date": "2020-12-19T02:31:38Z",
-        "choices": [
-            {
-                "id": 9,
-                "choice_text": "choice a",
-                "votes": 0
-            },
-            {
-                "id": 10,
-                "choice_text": "choice b",
-                "votes": 5
-            }
-        ]
-    }
-}
-```
-
-12. จากนั้นเราจะทำการสร้าง API สำหรับการลบ Question เราจะทำการเช็คเงื่อนไขเพิ่ม ถ้า `request.method` เป็น `DELETE` ให้ทำการลบตัว Question ออกจาก Database
-
-```python
-...
-
-  if request.method == 'DELETE':
-      serializer = QuestionSerializer(question)
-      question_id = serializer.data['id']
-      test = question.delete()
-      return Response({"message": f"question {question_id} delete successfully"}, status=status.HTTP_204_NO_CONTENT)
-```
-
-13. ต่อมาเราจะทำการ Update ข้อมูลของ Question และ Choices ใน API เดียวกันตรงนี้อาจจะวุ่นวายสักนิดหน่อย แต่ลองดูนะครับถ้าผ่านตรงนี้ได้ จะทำให้เราสามารถเขียน API ในการจัดการข้อมูลได้เก่งมากยิ่งขึ้น
-
-ก่อนอื่นเลยเหมือนเดิม เราจะทำการเพิ่มเงื่อนไข ถ้า `request.method` เป็น `PUT` ให้ทำการ Update ข้อมูล
-
-```python
-...
-
-  if request.method == 'PUT':
-    serializer = QuestionSerializer(question, data=request.data)
-    if serializer.is_valid():
-      serializer.save()
-      return Response({ "message": "update successfully", "data": serializer.data })
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-```
-
-14. ทำการแก้ไข `polls/serializers.py` เพื่อให้เราสามารถ Update Question และ Choices ได้ใน API เดียวกัน ด้วยการเพิ่ม Function update เข้าไปข้างใน `QuestionSerializer` Class
-
-```python
-def update(self, instance, validated_data):
-    instance.question_text = validated_data.get(
-      'question_text', instance.question_text)
-    instance.pub_date = validated_data.get(
-        'pub_date', instance.pub_date)
-    instance.save()
-
-    input_choices = validated_data.pop('choices')
-    choices = (instance.choices).all()
-    choices = list(choices)
-    for input_choice in input_choices:
-        if not len(choices):
-          Choice.objects.create(question=instance, **input_choice)
-          continue
-        choice = choices.pop(0)
-        choice.choice_text = input_choice.get(
-            'choice_text', choice.choice_text)
-        choice.votes = input_choice.get('votes', choice.votes)
-        choice.save()
-
-    return instance
-```
-
-15. จากนั้นลองทำการ Update ผ่าน Postman
-
-ใส่ Request Body ดังนี้
-
-```json
-{
-  "question_text": "new question_text test2",
-  "pub_date": "2020-12-19T02:31:38Z",
-  "choices": [
-    {
-      "id": 5,
-      "choice_text": "updated choice",
-      "votes": 10
-    },
-    {
-      "choice_text": "update new choice 222",
-      "votes": 20
-    },
-    {
-      "choice_text": "update new choice 30",
-      "votes": 30
-    }
-  ]
-}
-```
-
-หน้าตา Reponse จะเป็นประมาณนี้
-
-```json
-{
-  "message": "update successfully",
-  "data": {
-    "id": 12,
-    "question_text": "new question_text test2",
-    "pub_date": "2020-12-19T02:31:38Z",
-    "choices": [
-      {
-        "id": 5,
-        "choice_text": "updated choice",
-        "votes": 10
-      },
-      {
-        "id": 6,
-        "choice_text": "update new choice 222",
-        "votes": 20
-      },
-      {
-        "id": 8,
-        "choice_text": "update new choice 30",
-        "votes": 30
-      }
-    ]
-  }
-}
-```
-
-_ถ้าเราใส่ Chioce ที่ไม่ได้มีอยู่ใน Database ตัว API เราจะทำการสร้างให้อัตโนมัติตามโค้ดที่เราเขียนกันไว้จำได้มั้ยนะ_
+<details>
+  <summary>เฉลย</summary>
+  
+  ```python
+    @api_view(['GET'])
+    @csrf_exempt
+    def single_post_detail(request, post_id):
+      if request.method == "GET":
+        try:
+          post = Post.objects.filter(id=post_id)
+          serializer = PostSerializer(post[0])
+          return Response({ "data": serializer.data })
+        except:
+          return Response({ "data": {} }, status=status.HTTP_404_NOT_FOUND)
+    ```
+</details>
