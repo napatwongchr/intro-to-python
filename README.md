@@ -43,7 +43,7 @@ Decorator
 
 <br><hr><br>
 
-## DJANGO
+## Django
 
 [Getting Start With Django](https://github.com/napatwongchr/intro-to-python/blob/main/lessons/getting-start-with-django.md)<br>
 [Building First Simple API](https://github.com/napatwongchr/intro-to-python/blob/main/lessons/building-first-simple-api.md)<br>
@@ -53,6 +53,11 @@ Decorator
 [Object Relational Mapper](https://github.com/napatwongchr/intro-to-python/blob/main/lessons/orm.md)<br>
 [ORM With Relations](./lessons/orm-with-relations.md)<br>
 [Django Rest Framework](./lessons/django-rest-framework.md)<br>
+
+<br><hr><br>
+
+## Authentication
+
 [Basic Authentication](./lessons/basic-authentication.md)<br>
 [Django Authentication System](./lessons/django-authentication-system.md)<br>
 [Django JWT Authentication](./lessons/django-jwt-authentication.md)<br>

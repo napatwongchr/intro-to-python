@@ -1,6 +1,8 @@
 # Object Relational Mapper (ORM)
 
-เราสามารถเขียน Raw Queries เพื่อที่จะทำ DB Operations ต่างได้ผ่าน Cursor แต่มันจะดีกว่าไหมถ้าเราสามารถที่จะ**ใช้ Concept ของ Class ในการทำ DB Operations** เพื่อที่ทำให้เรา Focus ในการเขียน App ได้มากขึ้น โดยไม่ต้องกังวลกับ SQL Statements สิ่งนี้เราจะเรียกว่า **"Object Relational Mapper (ORM)"**
+เราสามารถเขียน Raw Queries เพื่อที่จะทำ DB Operations ต่าง ๆ ได้ แต่มันจะดีกว่าไหมถ้าเราสามารถที่จะ**ใช้ Concept ของ Class ในการทำ DB Operations** เพื่อที่ทำให้เรา Focus ในการเขียน App ได้มากขึ้น โดยไม่ต้องกังวลกับ SQL Statements สิ่งนี้เราจะเรียกว่า **"Object Relational Mapper (ORM)"**
+
+![ORM](./images/orm.png)
 
 <br><hr><br>
 
