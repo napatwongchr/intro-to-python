@@ -54,3 +54,5 @@ Decorator
 [ORM With Relations](./lessons/orm-with-relations.md)<br>
 [Django Rest Framework](./lessons/django-rest-framework.md)<br>
 [Basic Authentication](./lessons/basic-authentication.md)<br>
+[Django Authentication System](./lessons/django-authentication-system.md)<br>
+[Django JWT Authentication](./lessons/django-jwt-authentication.md)<br>
