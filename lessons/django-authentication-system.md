@@ -135,3 +135,5 @@ def signup(request):
     return Response({ "message": "register successfully" }, status=status.HTTP_201_CREATED)
   return Response({ "message": "register failed", "errors": serializer.errors }, status=status.HTTP_400_BAD_REQUEST)
 ```
+
+<br><hr><br>
