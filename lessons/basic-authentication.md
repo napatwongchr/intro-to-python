@@ -70,6 +70,14 @@ Session คือ ชิ้นส่วนของข้อมูลที่�
 
 ## Token-Based Authentication (JWT)
 
+JWT เป็น String ยาว ๆ ที่ประกอบไปด้วย 3 ส่วน
+
+- Header
+- Payload
+- Signature
+
+![องค์ประกอบของ jwt](./images/jwt.png)
+
 ![Token Authenticaiton With JWT](./images/token-auth-with-jwt.png)
 
 **ข้อดี**
