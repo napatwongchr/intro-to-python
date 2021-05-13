@@ -53,7 +53,7 @@ Decorator
 [Object Relational Mapper](https://github.com/napatwongchr/intro-to-python/blob/main/lessons/orm.md)<br>
 [ORM With Relations](./lessons/orm-with-relations.md)<br>
 [Django Rest Framework](./lessons/django-rest-framework.md)<br>
-
+[Django Cors Setup](./lessons/django-cors-setup.md)<br>
 <br><hr><br>
 
 ## Authentication
